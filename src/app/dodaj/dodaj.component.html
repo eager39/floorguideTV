@@ -1,0 +1,4 @@
+<form [formGroup]="compForm">
+  Ime podjetja:<input formControlName="name" type="text">
+  Nadstropje:<input formControlName="floor" type="number">
+  <button class="form-control" (click)="addCompany()" class="btn btn-success" type="submit" >Dodaj</button>

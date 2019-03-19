@@ -8,9 +8,10 @@ import { ActivatedRoute,Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  sub;
-  id;
-
+  sub
+  id
+  data
+  times
   constructor(
     private _dataService: ApiDataService,
     private route: ActivatedRoute,
@@ -18,16 +19,24 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getData()
+  
+  }
+  async getData(){
     if(this.route.params){
       this.sub = this.route.params.subscribe(params => {
         if(params['id']){
+          
            this.id = params['id'];
         }else{
           this.id="all"
+          
         }
        
     })
     }
+    this.data =await this._dataService.get("data",{ params: {"id":this.id} }).toPromise()
+    console.log(this.data)
+    this.times = Array(parseInt(this.data[0].st)).fill().map((x,i)=>i);
   }
-
 }
