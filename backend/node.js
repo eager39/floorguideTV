@@ -43,20 +43,23 @@ app.get('/data',async function(req, res) {
    var id=req.query.id
    console.log(req.query)
 if(id=="all"){
-   var sql = 'SELECT *,(select count(DISTINCT(floor))  FROM company) as st FROM floorguidetv.company order by floor,ord asc;';
+   var sql = 'SELECT * FROM company order by floor,ord asc;';
+   var sql2="SELECT DISTINCT(floor) FROM company order by floor asc "
 }else{
-   var sql = 'SELECT id,name,active,type,ord,duration FROM items WHERE active=1 and display=? ORDER BY type asc';
+   var sql = 'SELECT * FROM company WHERE floor=? order by floor,ord asc;';
+   var sql2="SELECT DISTINCT(floor) FROM company WHERE floor=? order by floor asc"
 }
    
    var data;
  //  var sql = 'SELECT id,name,active,type,ord,duration FROM items WHERE active=1 and display=? ORDER BY type asc';
-  var result=await connection.query(sql,[id])
-      if(result){
-         res.json(result)
-      }
    
-
-
+ 
+     res.json(await Promise.all([connection.query(sql,[id]),connection.query(sql2,[id] )])) 
+});
+app.get('/dataedit',async function(req, res) {
+   var sql = 'SELECT * FROM company order by floor';
+ var result=await connection.query(sql)
+ res.json(result)
 });
 app.post("/addCompany",async function(request,response){
    if(request.body.name==""){
@@ -72,6 +75,28 @@ app.post("/addCompany",async function(request,response){
       response.json(result)
    }
 
+})
+app.post("/editCompany",async function(request,response){
+   if(request.body.name==""){
+      response.status(400).json(false)
+      return false
+
+   }
+   console.log(request.body)
+   var name=request.body.name
+   var floor=request.body.floor
+   var id=request.body.id
+   var sql="UPDATE company set name=?,floor=? WHERE id=?"
+   var result=await connection.query(sql,[name,floor,id])
+   if(result){
+      response.json(result)
+   }
+
+})
+app.post("/deleteCompany",async function(req,res){
+   var sql="DELETE FROM company WHERE id=?"
+   var result=await connection.query(sql,[req.body.id])
+   res.json(result)
 })
 
 

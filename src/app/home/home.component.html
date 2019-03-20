@@ -1,12 +1,35 @@
-<ng-container *ngFor="let number of times">
- <h1>{{number}}</h1>
-<ul *ngFor="let item of data">
+
+<div class="container" *ngIf="data && id=='all'" >
+<ng-container *ngFor="let number of data[1]">
+  <div class="left" [ngStyle]="{'height.%': 100/cssheight}" > <h1>{{number.floor}}</h1></div>
+  <div class="right" [ngStyle]="{'height.%': 100/cssheight}">
+      <ng-container *ngFor="let item of data[0]">
   
    
-  <li *ngIf="item.floor==number">
-   {{item.name}}
-  </li>
-  
-  
-</ul>
+          <h2 *ngIf="item.floor==number.floor">
+           {{item.name}}
+          </h2>
+          
+          
+      </ng-container>
+
+  </div>
 </ng-container>
+</div>
+<div class="container2" *ngIf="data && id!='all'" >
+    <ng-container class="test" *ngFor="let number of data[1]">
+      <div class="left" [ngStyle]="{'height.%': 100}" > <h1>{{number.floor}}</h1></div>
+      <div class="right" [ngStyle]="{'height.%': 100}">
+          <ng-container *ngFor="let item of data[0]">
+      
+            
+              <h2 *ngIf="item.floor==number.floor">
+               {{item.name}}
+              </h2>
+              
+              
+          </ng-container>
+    
+      </div>
+    </ng-container>
+    </div>

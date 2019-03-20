@@ -2,3 +2,16 @@
   Ime podjetja:<input formControlName="name" type="text">
   Nadstropje:<input formControlName="floor" type="number">
   <button class="form-control" (click)="addCompany()" class="btn btn-success" type="submit" >Dodaj</button>
+
+
+
+  <ul *ngFor="let item of data">
+    <li>
+    Podjetje: {{item.name}}, nadstropje : {{item.floor}} <button (click)="edit(item)">Uredi</button> <button (click)="deleteCompany(item)">Izbriši</button>
+    </li>
+  </ul>
+  <form [formGroup]="compForm" *ngIf="editvar">
+      Ime podjetja:<input formControlName="name" value="{{namevar}}" type="text">
+      Nadstropje:<input formControlName="floor" value="{{floorvar}}" type="number">
+      <button class="form-control" (click)="urediCompany()" class="btn btn-success" type="submit" >Dodaj</button>
+      </form>

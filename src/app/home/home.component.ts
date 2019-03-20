@@ -12,19 +12,18 @@ export class HomeComponent implements OnInit {
   id
   data
   times
+  cssheight
+  interval
   constructor(
     private _dataService: ApiDataService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
-  ngOnInit() {
-    this.getData()
-  
-  }
-  async getData(){
+  ngOnInit() {  
     if(this.route.params){
-      this.sub = this.route.params.subscribe(params => {
+    
+      this.sub = this.route.params.subscribe(params => { 
         if(params['id']){
           
            this.id = params['id'];
@@ -35,8 +34,25 @@ export class HomeComponent implements OnInit {
        
     })
     }
+    this.getData()
+    this.interval = setInterval(() => {
+      
+        this.data=new Array
+        this.getData()
+      
+  
+  
+   
+   
+  }, 60000);
+  
+  }
+  async getData(){
+  
     this.data =await this._dataService.get("data",{ params: {"id":this.id} }).toPromise()
     console.log(this.data)
-    this.times = Array(parseInt(this.data[0].st)).fill().map((x,i)=>i);
+   
+  
+    this.cssheight=this.data[1].length
   }
 }
