@@ -43,8 +43,8 @@ app.get('/data',async function(req, res) {
    var id=req.query.id
    console.log(req.query)
 if(id=="all"){
-   var sql = 'SELECT * FROM company order by floor,room asc;';
-   var sql2="SELECT DISTINCT(floor) FROM company order by floor,room asc "
+   var sql = 'SELECT * FROM company order by floor,room desc;';
+   var sql2="SELECT DISTINCT(floor) FROM company order by floor desc "
 }else{
    var sql = 'SELECT * FROM company WHERE floor=? order by floor,room asc;';
    var sql2="SELECT DISTINCT(room) FROM company WHERE floor=? order by floor,room asc"

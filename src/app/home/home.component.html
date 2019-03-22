@@ -1,12 +1,12 @@
 
 <div class="container" *ngIf="data && id=='all'" >
-<ng-container *ngFor="let number of data[1]">
-  <div class="left" [ngStyle]="{'height.%': 100/cssheight}" > <h1>{{number.floor}}. nad</h1></div>
-  <div class="right" [ngStyle]="{'height.%': 100/cssheight}">
+<ng-container *ngFor="let number of data[1];let i=index">
+  <div class="left" [ngStyle]="{'height.%': 100/cssheight}" [ngClass]="{'odd':i%2==0,'even':i%2!=0}" > <h1>{{number.floor}}. nad</h1></div>
+  <div class="right" [ngStyle]="{'height.%': 100/cssheight}" [ngClass]="{'odd':i%2==0,'even':i%2!=0}" >
       <ng-container *ngFor="let item of data[0]">
   
    
-          <p *ngIf="item.floor==number.floor">
+          <p  class="single" *ngIf="item.floor==number.floor">
            {{item.name}}
           </p>
           
@@ -19,9 +19,9 @@
 <h1 *ngIf="id!='all'" class="floor">{{id}}. Nadstropje</h1>
 <div class="container2" *ngIf="data && id!='all'" >
   
-    <ng-container class="test" *ngFor="let number of data[1]">
-      <div class="left" [ngStyle]="{'height.px': 70 }" > <h1>{{number.room}}</h1></div>
-      <div class="right" [ngStyle]="{'height.px': 70 }">
+    <ng-container class="test" *ngFor="let number of data[1];let i=index">
+      <div class="left2" [ngStyle]="{'height.px': 70 }" [ngClass]="{'odd':i%2==0,'even':i%2!=0}" > <h1>{{number.room}}</h1></div>
+      <div class="right2" [ngStyle]="{'height.px': 70 }" [ngClass]="{'odd':i%2==0,'even':i%2!=0}">
           <ng-container *ngFor="let item of data[0]">
       
             
