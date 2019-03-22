@@ -1,17 +1,31 @@
+<ng-container *ngIf="data">
+
 <form [formGroup]="compForm">
   Ime podjetja:<input formControlName="name" type="text">
   Nadstropje:<input formControlName="floor" type="number">
+  Soba:<input formControlName="room" type="text">
   <button class="form-control" (click)="addCompany()" class="btn btn-success" type="submit" >Dodaj</button>
+  {{message}}
+  <br/>
+    <select formControlName="select" >
+        <option *ngFor="let option of data[1]" [value]="option.floor">{{option.floor}}</option>
+       
 
-
-
-  <ul *ngFor="let item of data">
-    <li>
-    Podjetje: {{item.name}}, nadstropje : {{item.floor}} <button (click)="edit(item)">Uredi</button> <button (click)="deleteCompany(item)">Izbriši</button>
-    </li>
-  </ul>
-  <form [formGroup]="compForm" *ngIf="editvar">
-      Ime podjetja:<input formControlName="name" value="{{namevar}}" type="text">
-      Nadstropje:<input formControlName="floor" value="{{floorvar}}" type="number">
+      </select>
+    
+</form>
+ <form [formGroup]="compForm" *ngIf="editvar">
+   <h1>Urejanje</h1>
+      Ime podjetja:<input formControlName="name" type="text">
+      Nadstropje:<input formControlName="floor"  type="number">
+      Soba:<input formControlName="room"  type="text">
       <button class="form-control" (click)="urediCompany()" class="btn btn-success" type="submit" >Dodaj</button>
       </form>
+
+  
+  <ul *ngFor="let item of data[0]">
+    <li *ngIf="item.floor==compForm.value.select">
+    Podjetje: {{item.name}}, nadstropje : {{item.floor}} , soba: {{item.room}} <button (click)="edit(item)">Uredi</button> <button (click)="deleteCompany(item)">Izbriši</button>
+    </li>
+  </ul>
+ </ng-container>

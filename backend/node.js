@@ -43,11 +43,11 @@ app.get('/data',async function(req, res) {
    var id=req.query.id
    console.log(req.query)
 if(id=="all"){
-   var sql = 'SELECT * FROM company order by floor,ord asc;';
-   var sql2="SELECT DISTINCT(floor) FROM company order by floor asc "
+   var sql = 'SELECT * FROM company order by floor,room asc;';
+   var sql2="SELECT DISTINCT(floor) FROM company order by floor,room asc "
 }else{
-   var sql = 'SELECT * FROM company WHERE floor=? order by floor,ord asc;';
-   var sql2="SELECT DISTINCT(floor) FROM company WHERE floor=? order by floor asc"
+   var sql = 'SELECT * FROM company WHERE floor=? order by floor,room asc;';
+   var sql2="SELECT DISTINCT(room) FROM company WHERE floor=? order by floor,room asc"
 }
    
    var data;
@@ -57,9 +57,10 @@ if(id=="all"){
      res.json(await Promise.all([connection.query(sql,[id]),connection.query(sql2,[id] )])) 
 });
 app.get('/dataedit',async function(req, res) {
-   var sql = 'SELECT * FROM company order by floor';
- var result=await connection.query(sql)
- res.json(result)
+   var sql = 'SELECT * FROM company order by room';
+   var sql2="SELECT DISTINCT(floor) FROM company order by floor asc "
+   res.json(await Promise.all([connection.query(sql),connection.query(sql2 )])) 
+ 
 });
 app.post("/addCompany",async function(request,response){
    if(request.body.name==""){
@@ -69,8 +70,9 @@ app.post("/addCompany",async function(request,response){
    }
    var name=request.body.name
    var floor=request.body.floor
-   var sql="INSERT INTO company (name,floor) VALUES (?,?)"
-   var result=await connection.query(sql,[name,floor])
+   var room=request.body.room
+   var sql="INSERT INTO company (name,floor,room) VALUES (?,?,?)"
+   var result=await connection.query(sql,[name,floor,room])
    if(result){
       response.json(result)
    }
@@ -86,8 +88,9 @@ app.post("/editCompany",async function(request,response){
    var name=request.body.name
    var floor=request.body.floor
    var id=request.body.id
-   var sql="UPDATE company set name=?,floor=? WHERE id=?"
-   var result=await connection.query(sql,[name,floor,id])
+   var room=request.body.room
+   var sql="UPDATE company set name=?,floor=?,room=? WHERE id=?"
+   var result=await connection.query(sql,[name,floor,room,id])
    if(result){
       response.json(result)
    }

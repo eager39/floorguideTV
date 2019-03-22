@@ -10,9 +10,9 @@ import { ApiDataService } from '../api-data.service';
 export class DodajComponent implements OnInit {
   data
   editvar=false
-  namevar="test";
-  floorvar;
-  idvar;
+ 
+  idvar
+  message;
   constructor(
     private _dataService: ApiDataService,
   ) { }
@@ -20,6 +20,8 @@ export class DodajComponent implements OnInit {
   compForm = new FormGroup({
     name: new FormControl(''),
     floor: new FormControl(''),
+    room: new FormControl(""),
+    select: new FormControl("")
     
  })
 
@@ -31,20 +33,28 @@ export class DodajComponent implements OnInit {
   var formdata=this.compForm.value
     var data = await this._dataService.add(formdata, "addCompany").toPromise()
     if (data) {
-       alert("uspešno dodano")
-     
+      this.message="Uspešno dodano"
+     this.getData()
     }
  }
  async getData(){
   this.data =await this._dataService.get("dataedit").toPromise()
-
+console.log(this.data)
 
  }
  edit(item){
    this.editvar=true
-   this.namevar=item.name
-   this.floorvar=item.floor
+
    this.idvar=item.id
+   this.compForm.controls["name"].setValue(
+    item.name
+  );
+  this.compForm.controls["floor"].setValue(
+    item.floor
+  );
+  this.compForm.controls["room"].setValue(
+    item.room
+  );
  }
 
  async urediCompany() {
@@ -55,10 +65,12 @@ export class DodajComponent implements OnInit {
     var data = await this._dataService.add({
       "name":this.compForm.value.name,
       "floor":this.compForm.value.floor,
+      "room":this.compForm.value.room,
       "id":this.idvar
     }, "editCompany").toPromise()
     if (data) {
        alert("uspešno spremenjeno")
+       this.editvar=false
        this.getData()
     }
  }
@@ -67,7 +79,7 @@ export class DodajComponent implements OnInit {
       "id":item.id
     }, "deleteCompany").toPromise()
     if (data) {
-       alert("uspešno izbrisano")
+       
        this.getData()
     }
  }
