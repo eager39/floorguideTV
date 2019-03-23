@@ -29,7 +29,7 @@ export class DodajComponent implements OnInit {
     this.getData()
   }
   async addCompany() {
-
+  console.log(this.compForm.value)
   var formdata=this.compForm.value
     var data = await this._dataService.add(formdata, "addCompany").toPromise()
     if (data) {

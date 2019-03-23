@@ -15,14 +15,8 @@
     
 }
 .container2{
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    /* bring your own prefixes */
-    transform: translate(-50%, -50%);
-    
-    height: 80%;
-    width: 100%;
+   width: 100%
+  
     
 }
 .left{

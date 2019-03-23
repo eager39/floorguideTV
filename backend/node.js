@@ -35,7 +35,7 @@ app.use(bodyParser.json({
    limit: '50mb'
 }));
 
-
+connection.query('SET CHARACTER SET utf8');
 
 
 app.get('/data',async function(req, res) {
@@ -52,9 +52,10 @@ if(id=="all"){
    
    var data;
  //  var sql = 'SELECT id,name,active,type,ord,duration FROM items WHERE active=1 and display=? ORDER BY type asc';
-   
+   var result1=connection.query(sql,[id])
+   var result2=connection.query(sql2,[id])
  
-     res.json(await Promise.all([connection.query(sql,[id]),connection.query(sql2,[id] )])) 
+     res.json(await Promise.all([result1,result2])) 
 });
 app.get('/dataedit',async function(req, res) {
    var sql = 'SELECT * FROM company order by room';
@@ -68,7 +69,9 @@ app.post("/addCompany",async function(request,response){
       return false
 
    }
+   
    var name=request.body.name
+   console.log(name)
    var floor=request.body.floor
    var room=request.body.room
    var sql="INSERT INTO company (name,floor,room) VALUES (?,?,?)"

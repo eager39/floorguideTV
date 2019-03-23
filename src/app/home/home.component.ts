@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   times
   cssheight
   interval
+  h
   constructor(
     private _dataService: ApiDataService,
     private route: ActivatedRoute,
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {  
+    this. h = window.innerHeight-100  ;
     if(this.route.params){
     
       this.sub = this.route.params.subscribe(params => { 
@@ -54,5 +56,8 @@ export class HomeComponent implements OnInit {
    
   
     this.cssheight=this.data[1].length
+    if(this.cssheight<10 && this.id!="all"){
+      this.cssheight=15
+    }
   }
 }
