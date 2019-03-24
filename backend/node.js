@@ -13,7 +13,8 @@ var connection = mysql.createConnection({
    user: conf.DBuser,
    password: conf.DBpass,
    database: conf.database,
-   multipleStatements: true
+   multipleStatements: true,
+ 
 })
 connection.query = util.promisify(connection.query)
 
@@ -35,7 +36,7 @@ app.use(bodyParser.json({
    limit: '50mb'
 }));
 
-connection.query('SET CHARACTER SET utf8');
+
 
 
 app.get('/data',async function(req, res) {

@@ -22,7 +22,8 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {  
-    this. h = window.innerHeight-100  ;
+    this. h = window.innerHeight-85  ;
+    
     if(this.route.params){
     
       this.sub = this.route.params.subscribe(params => { 

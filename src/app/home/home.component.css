@@ -48,11 +48,11 @@
 .right{
     
     position: relative;
-    float:right;
+    
     width: 80%;
-    -webkit-column-count: 4;
-    -moz-column-count: 4;
-         column-count: 4;
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+         column-count: 3;
       font-family: sans-serif;
             
               color:#731DD8; 
@@ -65,7 +65,8 @@
     position: relative;
     float:right;
     width: 80%;
-  
+    white-space: nowrap;
+      
       font-family: sans-serif;
             
               color:#731DD8; 
@@ -76,14 +77,18 @@
 .right p{
     margin:0;
     padding: 0;
-    width: 100%;
+    width: auto;
     font-size: 25px;
+    
 }
 .right2 p{
     margin:0;
     padding: 0;
-    width: 100%;
+    width: auto;
+    margin-right:30px; 
     font-size: 25px;
+    display: inline-block;
+    
 }
 h1{
     padding: 0;
@@ -96,6 +101,10 @@ h1{
 }
 .floor{
     text-align: center;
+    background-color: #731DD8;
+    height:75px;
+    width: 100%;
+    line-height: 75px;
 }
 .odd{
     background-color:#D4B483
